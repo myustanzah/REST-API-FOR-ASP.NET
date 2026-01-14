@@ -1,0 +1,67 @@
+# =========================
+# .NET build outputs
+# =========================
+bin/
+obj/
+out/
+
+# =========================
+# User-specific files
+# =========================
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# =========================
+# Visual Studio
+# =========================
+.vs/
+.vscode/
+*.code-workspace
+
+# =========================
+# Rider / JetBrains
+# =========================
+.idea/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Environment & secrets
+# =========================
+appsettings.Development.json
+appsettings.Production.json
+.env
+
+# =========================
+# Docker
+# =========================
+docker-compose.override.yml
+
+# =========================
+# EF Core
+# =========================
+Migrations/*.Designer.cs
+Migrations/*.cs
+
+# =========================
+# Test results
+# =========================
+TestResults/
+
+# =========================
+# Coverage reports
+# =========================
+coverage/
+coverage.xml
