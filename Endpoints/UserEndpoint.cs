@@ -9,22 +9,21 @@ public static class UserEndpoint
         app.MapDelete("/delete/{id}", DeleteUser);
     }
 
-    static async Task<IResult> CreateUser(HttpRequest request, UserService userService)
+    static async Task<IResult> CreateUser([FromBody] CreateUserRequest request, UserService userService)
     {
         Console.WriteLine("Creating user...");
-        Console.WriteLine($"Username: '{request.ContentType}'");
-        // Console.WriteLine($"Email: '{request.Email}'");
-        // var user = await userService.AddUser(request);
-        // return Results.Created($"/create/{user.Id}", user);
-        return Results.Ok("Create User Endpoint");
+       
+        var user = await userService.AddUser(request);
+        return Results.Created($"/create/{user.Id}", user);
     }
 
     static async Task<IResult> GetUserById(int id, UserService userService)
     {
         var user = await userService.GetUserById(id);
+        // Console.WriteLine($"Fetching user with ID: {user}");
         if (user == null)
         {
-            return Results.NotFound();
+            return Results.NotFound("Data not found");
         }
         return Results.Ok(user);
     }
@@ -35,12 +34,12 @@ public static class UserEndpoint
         return Results.Ok(users);
     }
 
-    static async Task<IResult> UpdateUser(int id, CreateUserRequest request, UserService userService)
+    static async Task<IResult> UpdateUser(int id, [FromBody]CreateUserRequest request, UserService userService)
     {
         var user = await userService.GetUserById(id);
         if (user == null)
         {
-            return Results.NotFound();
+            return Results.NotFound("Data not found");
         }
 
         user.Username = request.Username;
@@ -48,18 +47,18 @@ public static class UserEndpoint
 
         await userService.UpdateUser(user);
 
-        return Results.Ok(user);
+        return Results.Ok(new { before = user, after = request });
     }
     static async Task<IResult> DeleteUser(int id, UserService userService)
     {
         var user = await userService.GetUserById(id);
         if (user == null)
         {
-            return Results.NotFound();
+            return Results.NotFound("User not found");
         }
 
         await userService.DeleteUser(id);
 
-        return Results.NoContent();
+        return Results.Ok("User deleted successfully");
     }
 }

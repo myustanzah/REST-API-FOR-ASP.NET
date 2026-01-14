@@ -12,7 +12,7 @@ public class UserService
         return _userRepository.GetAllUsers();
     }
 
-    public async Task<User> GetUserById(int id)
+    public async Task<User?> GetUserById(int id)
     {
         return await _userRepository.GetUserById(id);
     }
